@@ -109,26 +109,12 @@ async def get_icon(ctx: commands.Context, *, member: discord.Member = None) -> N
         await ctx.send(f"{ctx.author.mention}. This member's icon is located at: {url}")
 
 
-@client.command(name="hmm", aliases=["hm", "swirl"], brief="Distorts your icon")
-async def hmm(ctx: commands.Context, *, user: discord.User = None) -> None:
-    """Take's a user's icon and creates a gif swiverling it"""
-
-    # Create a bytes-like object to save the user's avatar on
-    image_file = io.BytesIO()
-
-    if user:
-        await user.avatar_url.save(image_file)
-    else:
-        await ctx.author.avatar_url.save(image_file)
-
-    image_file.seek(0)
-
-    # Get the gif
-    img = await client.helpers.edit_swirl(image_file)
-    img.seek(0)
-
-    file = discord.File(img, filename="icon.gif")
-    await ctx.send(file=file)
+@client.command()
+async def xrr(ctx):
+    await ctx.send(f'<@597538447837888512> xronia polla roudis na xairese to onama sou ')
 
 
+@client.command()
+async def kar(ctx):
+    await ctx.send(f':heart: ')
 client.run('Nzk0NjgxNTYyMTYzMDUyNjA1.X--W4A.Ord7g6zPxcmMUqaL8CUD2kRjxPc')
