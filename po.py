@@ -117,4 +117,10 @@ async def xrr(ctx):
 @client.command()
 async def kar(ctx):
     await ctx.send(f':heart: ')
+
+@client.command()
+async def play(ctx, url : str):
+    voicechannel= discord.utils.get(ctx.guild.voice_channels, name='mousiki')
+    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
+    await voicechannel.connect()
 client.run('Nzk0NjgxNTYyMTYzMDUyNjA1.X--W4A.Ord7g6zPxcmMUqaL8CUD2kRjxPc')
