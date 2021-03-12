@@ -1,7 +1,11 @@
 import discord
 from discord.ext import commands
+from discord.utils import get
 import random
 import io
+import youtube_dl
+import os
+from datetime import datetime
 client = commands.Bot(command_prefix= '.')
 
 @client.event
@@ -124,7 +128,96 @@ async def panoss(ctx):
 
 @client.command()
 async def play(ctx, url : str):
-    voicechannel= discord.utils.get(ctx.guild.voice_channels, name='mousiki')
+    song_there = os.path.isfile("song.mp3")
+    try:
+        if song_there:
+            os.remove("song.mp3")
+    except PermissionError:
+        await ctx.send("Wait for the current playing music to end or use the 'stop' command")
+        return
+
+    voiceChannel = discord.utils.get(ctx.guild.voice_channels, name='General')
+    await voiceChannel.connect()
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
-    await voicechannel.connect()
+
+    ydl_opts = {
+        'format': 'bestaudio/best',
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'mp3',
+            'preferredquality': '192',
+        }],
+    }
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([url])
+    for file in os.listdir("./"):
+        if file.endswith(".mp3"):
+            os.rename(file, "song.mp3")
+    voice.play(discord.FFmpegPCMAudio("song.mp3"))
+
+"""@client.command()
+async def leave(ctx):
+    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
+    if voice.is_connected():
+        await voice.disconnect()
+    else:
+        await ctx.send("The bot is not connected to a voice channel.")
+
+
+@client.command()
+async def pause(ctx):
+    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
+    if voice.is_playing():
+        voice.pause()
+    else:
+        await ctx.send("Currently no audio is playing.")
+
+
+@client.command()
+async def resume(ctx):
+    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
+    if voice.is_paused():
+        voice.resume()
+    else:
+        await ctx.send("The audio is not paused.")
+
+
+@client.command()
+async def stop(ctx):
+    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
+    voice.stop()"""
+
+
+@client.command(
+    name="mute", brief="Mute a member",
+    description="Mute a member for the specified amount of minutes", aliases=["m", "voulwne"])
+@commands.has_permissions( manage_channels=True)
+async def mute(ctx: commands.Context, member: discord.Member, minutes: float = 5.0) -> None:
+     
+    muted_role = discord.utils.get(ctx.guild.roles,id=786702739345375232)
+    await member.add_roles(muted_role)
+
+    
+    await ctx.send(f"{ctx.author.mention} muted {member.mention} for {minutes} minutes")
+    
+    synadelfos_role = ctx.guild.get_role(774337999307014174)
+    await member.remove_roles(synadelfos_role)
+
+@client.command(name="unmute", brief="Unmute a muted member")    
+@commands.has_permissions( manage_channels=True)
+async def unmute(ctx: commands.Context, member: discord.Member ):
+    synadelfos_role = ctx.guild.get_role(774337999307014174)
+    muted_role = discord.utils.get(ctx.guild.roles,id=786702739345375232)
+    await member.add_roles(synadelfos_role)
+    await member.remove_roles(muted_role)
+    await ctx.send(f"{ctx.author.mention} unmuted {member.mention}" )
+
+@client.command()
+async def mlk(ctx):
+    await ctx.send(f'<@607657777577590795> ksipna malaka')
+
+@client.command()
+async def diss(ctx):
+    await ctx.send(f'<@621247745474428941> https://www.youtube.com/watch?v=yGk1bjE5jAQ&ab_channel=articuno')
+
 client.run('Nzk0NjgxNTYyMTYzMDUyNjA1.X--W4A.Ord7g6zPxcmMUqaL8CUD2kRjxPc')
