@@ -1,10 +1,17 @@
 import discord
+import time
+import asyncio
 from discord.ext import commands
 from discord.utils import get
 import random
 import io
 import os
+import textblob
+from gtts import gTTS
  
+import helpers
+
+
 from datetime import datetime
 client = commands.Bot(command_prefix= '.')
 client.remove_command('help')
@@ -128,6 +135,7 @@ async def mute(ctx: commands.Context, member: discord.Member, minutes: float = 5
     
     synadelfos_role = ctx.guild.get_role(774337999307014174)
     await member.remove_roles(synadelfos_role)
+            
 
 @client.command(name="unmute", brief="Unmute a muted member")    
 @commands.has_permissions( manage_channels=True)
@@ -185,6 +193,27 @@ async def rules(ctx):
     await ctx.send(embed=embed)
 
 @client.command()
+async def rule1(ctx):
+    author = ctx.message.author 
+
+    embed = discord.Embed(
+        colour= discord.Colour.red()
+    )
+    embed.add_field(name = 'Rule #1', value='No spam ',inline= False)
+    await ctx.send(embed=embed)
+
+@client.command()
+async def rule2(ctx):
+    author = ctx.message.author 
+
+    embed = discord.Embed(
+        colour= discord.Colour.red()
+    )
+    embed.add_field(name = 'Rule #2', value='Be respectful',inline= False)
+    await ctx.send(embed=embed)
+
+
+@client.command()
 async def help(ctx):
     author = ctx.message.author 
 
@@ -213,6 +242,22 @@ async def help(ctx):
     #await author.send(embed=embed)
     await ctx.send(embed=embed)
 
+@client.command(name="translate", aliases=["trans", "tr"], brief="Translate text from a language to greek")
+async def translate(ctx: commands.Context, *, text: str) -> None:
 
+    blob = textblob.TextBlob(text)
+    translate_from = blob.detect_language()
+    translate_to = "el"
+    try:
+        text = str(blob.translate(to=translate_to))
+    except textblob.exceptions.NotTranslated:
+        print("Text was in 'el'")
+
+    if text:
+        await ctx.send(f"{ctx.author.mention} Translation from {translate_from} to {translate_to}: ```{text} ```")
+    else:
+        await ctx.send(f"{ctx.author.mention}. Couldn't translate")
+    
+ 
+ 
 client.run('Nzk0NjgxNTYyMTYzMDUyNjA1.X--W4A.P4RU52SCN4j1Kl1BxFTsbhBSzbY')
-
