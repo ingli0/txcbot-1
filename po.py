@@ -260,4 +260,4 @@ async def translate(ctx: commands.Context, *, text: str) -> None:
  
  
 
-client.run('Nzk0NjgxNTYyMTYzMDUyNjA1.X--W4A.FBzn2bVNG2S1dkm0F77FAQhdsxc')
+client.run('-')
