@@ -215,5 +215,5 @@ async def help(ctx):
     await ctx.send(embed=embed)
 
 
-client.run('Nzk0NjgxNTYyMTYzMDUyNjA1.X--W4A.oVFU2uf4X4JIIDLxXmiyCQSioIM')
+client.run('bot token')
 >>>>>>> cae1427 (good)
