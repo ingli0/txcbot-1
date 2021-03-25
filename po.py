@@ -238,6 +238,7 @@ async def help(ctx):
     embed.add_field(name = 'rules', value='kanones tou server pou prepei na akoulouthiseis',inline= False)
     embed.add_field(name = 'sm', value='bazw slowmode',inline= False)
     embed.add_field(name = 'unmute', value='kanw unmute kapion',inline= False)
+    embed.add_field(name = 'tr', value='metafrazw kati sta ellinika',inline= False)
 
     #await author.send(embed=embed)
     await ctx.send(embed=embed)
@@ -260,4 +261,5 @@ async def translate(ctx: commands.Context, *, text: str) -> None:
     
  
  
+
 client.run('Nzk0NjgxNTYyMTYzMDUyNjA1.X--W4A.x6EERviO96yqnANFrwG2iq028sM')
