@@ -7,6 +7,7 @@ import io
 import os
 import textblob
 from gtts import gTTS
+from discord.ext.commands import bot
 
 client = commands.Bot(command_prefix= '.')
 client.remove_command('help')
