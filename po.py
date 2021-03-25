@@ -232,7 +232,7 @@ async def help(ctx):
     embed.add_field(name = 'help', value='deixnei auto to minima',inline= False)
     embed.add_field(name = 'kalimera ', value='se kalimerizw',inline= False)
     embed.add_field(name = 'mute', value='mute enan xristh epeidh den ekatse fronima',inline= False)
-    embed.add_field(name = 'kalitos', value='kanw tag tous kolitous mou :blue_heart:',inline= False)
+    embed.add_field(name = 'kolitos', value='kanw tag tous kolitous mou :blue_heart:',inline= False)
     embed.add_field(name = 'toxic', value='to kaliterw site olwn ton epoxwn',inline= False)
     embed.add_field(name = 'picon', value='sou dixnw tin eikona profile enos xristh',inline= False)
     embed.add_field(name = 'rules', value='kanones tou server pou prepei na akoulouthiseis',inline= False)
@@ -253,6 +253,7 @@ async def translate(ctx: commands.Context, *, text: str) -> None:
         text = str(blob.translate(to=translate_to))
     except textblob.exceptions.NotTranslated:
         print("Text was in 'el'")
+
 
     if text:
         await ctx.send(f"{ctx.author.mention} Translation from {translate_from} to {translate_to}: ```{text} ```")
